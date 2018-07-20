@@ -12,9 +12,11 @@
 
 ## 目录结构
 
+```
 ├── config 配置文件
 ├── index.js 入口
 ├── models 数据库操作
 ├── public 静态资源
 ├── routes 路由
 └── views 模板
+```
