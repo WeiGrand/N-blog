@@ -1,0 +1,24 @@
+{
+  "name": "N-blog",
+  "version": "1.0.0",
+  "description": "[教程地址](https://github.com/nswbmw/N-blog)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WeiGrand/N-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WeiGrand/N-blog/issues"
+  },
+  "homepage": "https://github.com/WeiGrand/N-blog#readme",
+  "devDependencies": {
+    "eslint": "^5.1.0",
+    "eslint-config-google": "^0.9.1"
+  }
+}
