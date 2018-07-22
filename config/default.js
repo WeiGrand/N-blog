@@ -7,7 +7,7 @@ module.exports = {
   session: { // express-session 配置
     secret: 'defaultSecret',
     key: 'defaultKey',
-    maxAge: 3600
+    maxAge: 3600000000
   },
   mongodb: 'mongodb://localhost:27017/n-blog' // mongodb 地址
 };

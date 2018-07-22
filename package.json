@@ -28,6 +28,7 @@
     "express-formidable": "^1.0.0",
     "express-handlebars": "^3.0.0",
     "hbs": "^4.0.1",
+    "marked": "^0.4.0",
     "mongoose": "^5.2.4"
   }
 }

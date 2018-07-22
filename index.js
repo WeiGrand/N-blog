@@ -26,9 +26,15 @@ app.set('views', viewsPath);
 // 设置模板引擎
 app.engine('hbs', expressHandlebars({
   extname: '.hbs',
-  partialsDir  : [
-    path.join(viewsPath, 'components') // 公用模块路径
-  ]
+  helpers: {
+    renderGender(gender) {
+      return {m: '男', f: '女', x: '保密'}[gender];
+    },
+    ifEquals(arg1, arg2, options) {
+      return (arg1.toString() === arg2.toString()) ? options.fn(this) : options.inverse(this);
+    }
+  },
+  partialsDir: path.join(viewsPath, 'components') // 公用模块路径
 }));
 app.set('view engine', 'hbs');
 
