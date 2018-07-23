@@ -6,6 +6,7 @@ const express = require('express');
 const marked = require('marked');
 const checkLogin = require('../middlewares/check').checkLogin;
 const Post = require('../models/postModel');
+const Comment = require('../models/commentModel');
 
 const router = express.Router();
 
@@ -24,10 +25,19 @@ router.get('/', function(req, res, next) {
   }).sort({
     _id: -1
   }).then(function(posts) {
-    res.render('posts', {
-      posts: posts.map(post => {
+    // 添加评论数
+    Promise.all(posts.map(post => {
+      return Comment.find({
+        postId: post._id
+      }).then(function (comments) {
         post.content = marked(post.content);
+        post.commentsCount = comments.length;
+
         return post;
+      });
+    })).then(function (posts) {
+      res.render('posts', {
+        posts
       })
     });
   }).catch(next);
@@ -85,6 +95,14 @@ router.get('/:postId', function(req, res, next) {
       path: 'author',
       model: 'User'
     }),
+    Comment.find({
+      postId
+    }).populate({
+      path: 'author',
+      model: 'User'
+    }).sort({
+      _id: 1
+    }),
     Post.update({
       _id: postId
     }, {
@@ -94,6 +112,7 @@ router.get('/:postId', function(req, res, next) {
     })
   ]).then(function(result) {
     const post = result[0];
+    const comments = result[1];
 
     if (!post) {
       throw new Error('该文章不存在');
@@ -101,8 +120,18 @@ router.get('/:postId', function(req, res, next) {
 
     post.content = marked(post.content);
 
+    Comment.find({
+      postId: post._id
+    }).then(function (res) {
+      post.commentsCount = res.length;
+    });
+
     res.render('post', {
-      post
+      post,
+      comments: comments.map(comment => {
+        comment.content = marked(comment.content);
+        return comment;
+      })
     });
   }).catch(next);
 });
@@ -135,7 +164,7 @@ router.get('/:postId/edit', checkLogin, function(req, res, next) {
 // 编辑文章
 router.post('/:postId/edit', checkLogin, function(req, res, next) {
   const { postId } = req.params;
-  const author = req.session.user._id;
+
   const {
     title,
     content
