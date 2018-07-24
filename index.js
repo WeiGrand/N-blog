@@ -11,6 +11,8 @@ const flash = require('connect-flash');
 const config = require('config-lite')(__dirname);
 const expressHandlebars = require('express-handlebars');
 const expressFormidable = require('express-formidable');
+const winston = require('winston');
+const expressWinston = require('express-winston');
 const routes = require('./routes');
 const pkg = require('./package.json');
 
@@ -78,7 +80,40 @@ app.use(function(req, res, next) {
   next();
 });
 
+// 正常请求的日志
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console({
+      json: true,
+      colorize: true
+    }),
+    new winston.transports.File({
+      filename: 'logs/success.log'
+    })
+  ]
+}));
+
 routes(app);
+
+// 错误请求的日志
+app.use(expressWinston.errorLogger({
+  transports: [
+    new winston.transports.Console({
+      json: true,
+      colorize: true
+    }),
+    new winston.transports.File({
+      filename: 'logs/error.log'
+    })
+  ]
+}));
+
+// 简单的代码报错处理
+app.use(function (err, req, res) {
+  req.flash('error', err.message);
+
+  res.redirect('/posts');
+});
 
 app.listen(config.port, function() {
   console.log(`${pkg.name} listening on port ${config.port}`);

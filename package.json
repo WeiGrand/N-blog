@@ -27,8 +27,10 @@
     "connect-mongo": "^2.0.1",
     "express-formidable": "^1.0.0",
     "express-handlebars": "^3.0.0",
+    "express-winston": "^2.6.0",
     "hbs": "^4.0.1",
     "marked": "^0.4.0",
-    "mongoose": "^5.2.4"
+    "mongoose": "^5.2.4",
+    "winston": "^2.4.3"
   }
 }

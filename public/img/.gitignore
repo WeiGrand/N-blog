@@ -1,0 +1,5 @@
+# Ignore everything in this directory
+# git 会忽略 `public/img` 目录的文件而不忽略 `public/img` 目录
+*
+# Except this file
+!.gitignore
