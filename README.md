@@ -6,6 +6,13 @@
 
 使用 Express + MongoDB 搭建多人博客
 
+## 运行
+
+```bash
+npm install
+node index
+```
+
 ## 开发环境
 
 - Node.js: `8.9.1`
