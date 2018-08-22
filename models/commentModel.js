@@ -20,7 +20,7 @@ const CommentSchema = new Schema({
   }
 }, {
   timestamps: {
-    createdAt: 'created_at', // 为 `createdAt`
+    createdAt: 'created_at',
     updatedAt: 'updated_at'
   }
 });

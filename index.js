@@ -29,10 +29,10 @@ app.set('views', viewsPath);
 app.engine('hbs', expressHandlebars({
   extname: '.hbs',
   helpers: {
-    renderGender(gender) {
+    renderGender (gender) {
       return {m: '男', f: '女', x: '保密'}[gender];
     },
-    ifEquals(arg1, arg2, options) {
+    ifEquals (arg1, arg2, options) {
       return (arg1.toString() === arg2.toString()) ? options.fn(this) : options.inverse(this);
     }
   },
@@ -43,7 +43,7 @@ app.set('view engine', 'hbs');
 // 设置静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 设置
+// 设置 session
 app.use(session({
   name: config.session.key, // 保存 session id 的 字段
   secret: config.session.secret,
